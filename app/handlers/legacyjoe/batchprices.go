@@ -18,6 +18,19 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+// BatchLegacyPrice retrieves batch pool prices for multiple pairs on different chains.
+// @Summary Get batch v2 liquidity book pool prices
+// @Description Retrieves batch pool prices for multiple pairs on different chains.
+// @Tags V2 Batch Liquidity Book Pool price
+// @Accept json
+// @Produce json
+// @Param payload body types.BodyData true "Batch Liquidity book pool prices request data"
+// @Param chain path string true "Chain Name (avax, arb or bsc)"
+// @Success 200 {object} types.BatchResponse
+// @Failure 400 {object} types.BatchErrorResponse
+// @Failure 404 {object} types.BatchErrorResponse
+// @Failure 500 {object} types.BatchErrorResponse
+// @Router /{chain}/v2/batch-prices [post]
 func BatchLegacyPrice(c *fiber.Ctx) error {
 	payload := &types.BodyData{}
 	if err := c.BodyParser(payload); err != nil {

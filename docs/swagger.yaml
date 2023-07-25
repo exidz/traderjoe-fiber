@@ -1,0 +1,362 @@
+definitions:
+  types.BatchErrorResponse:
+    properties:
+      error:
+        type: string
+      params:
+        $ref: '#/definitions/types.BatchParams'
+    type: object
+  types.BatchParams:
+    properties:
+      baseAsset:
+        type: string
+      binStep:
+        type: integer
+      quoteAsset:
+        type: string
+    type: object
+  types.BatchResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+      success:
+        default: true
+        type: boolean
+    type: object
+  types.BodyData:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/types.LbPayload'
+        type: array
+    type: object
+  types.ErrorResponse:
+    properties:
+      data: {}
+      error:
+        type: string
+      success:
+        default: false
+        type: boolean
+    type: object
+  types.JoeBatchErrorResponse:
+    properties:
+      error:
+        type: string
+      params:
+        $ref: '#/definitions/types.JoeBatchParams'
+    type: object
+  types.JoeBatchParams:
+    properties:
+      baseAsset:
+        type: string
+      quoteAsset:
+        type: string
+    type: object
+  types.JoeBodyData:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/types.JoePayload'
+        type: array
+    type: object
+  types.JoePayload:
+    properties:
+      baseAsset:
+        type: string
+      quoteAsset:
+        type: string
+    type: object
+  types.LbPayload:
+    properties:
+      baseAsset:
+        type: string
+      binStep:
+        type: integer
+      quoteAsset:
+        type: string
+    type: object
+  types.Response:
+    properties:
+      data: {}
+      message:
+        type: string
+      success:
+        default: true
+        type: boolean
+    type: object
+info:
+  contact:
+    email: exidz@protonmail.com
+    name: API Support
+  description: 'Traderjoe pool price aggregator Rest API, developed in Golang using
+    Fiber. Support v2.1 Liquidity Book Contracts, v2 Liquidity Book Contracts, and
+    v1 Trader Joe Contracts across three major chains: Avalanche, Arbitrum, and Binance
+    Smart Chain.'
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: TraderJoe Fiber Pool price aggregator API
+  version: "1.0"
+paths:
+  /{chain}/v1/batch-prices:
+    post:
+      consumes:
+      - application/json
+      description: Retrieves batch pool prices for multiple pairs on different chains
+        using the JoeSwap protocol.
+      parameters:
+      - description: Batch pool request data
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/types.JoeBodyData'
+      - description: The chain name (avax, arb, bsc)
+        in: path
+        name: chain
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/types.JoeBatchErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/types.JoeBatchErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.JoeBatchErrorResponse'
+      summary: Get batch pool prices
+      tags:
+      - v1 Batch pool price
+  /{chain}/v1/prices/{base}/{quote}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the price data for a v1 pool pair on different chains.
+      parameters:
+      - description: The base asset contract address
+        in: path
+        name: base
+        required: true
+        type: string
+      - description: The quote asset contract address
+        in: path
+        name: quote
+        required: true
+        type: string
+      - description: The chain name (avax, arb, bsc)
+        in: path
+        name: chain
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/types.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/types.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.ErrorResponse'
+      summary: Get v1 pool pair price
+      tags:
+      - V1 Get Pool price
+  /{chain}/v2/batch-prices:
+    post:
+      consumes:
+      - application/json
+      description: Retrieves batch pool prices for multiple pairs on different chains.
+      parameters:
+      - description: Batch Liquidity book pool prices request data
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/types.BodyData'
+      - description: Chain Name (avax, arb or bsc)
+        in: path
+        name: chain
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.BatchResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/types.BatchErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/types.BatchErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.BatchErrorResponse'
+      summary: Get batch v2 liquidity book pool prices
+      tags:
+      - V2 Batch Liquidity Book Pool price
+  /{chain}/v2/prices/{base}/{quote}/{binstep}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the price data for a v2 liquidity book pool pair on different
+        chains.
+      parameters:
+      - description: The base asset contract address
+        in: path
+        name: base
+        required: true
+        type: string
+      - description: The quote asset contract address
+        in: path
+        name: quote
+        required: true
+        type: string
+      - description: The binstep value
+        in: path
+        name: binstep
+        required: true
+        type: string
+      - description: The chain name (avax, arb, bsc)
+        in: path
+        name: chain
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/types.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/types.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.ErrorResponse'
+      summary: Get v2 liquidity book pool pair price
+      tags:
+      - V2 Get Liquidity Book Pool price
+  /{chain}/v2_1/batch-prices:
+    post:
+      consumes:
+      - application/json
+      description: Retrieves batch pool prices for multiple pairs on different chains.
+      parameters:
+      - description: Batch Liquidity book pool prices request data
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/types.BodyData'
+      - description: Chain Name (avax, arb or bsc)
+        in: path
+        name: chain
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.BatchResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/types.BatchErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/types.BatchErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.BatchErrorResponse'
+      summary: Get batch v2.1 liquidity book pool prices
+      tags:
+      - V2.1 Batch Liquidity Book Pool price
+  /{chain}/v2_1/prices/{base}/{quote}/{binstep}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the price data for a v2.1 liquidity book pool pair on
+        different chains.
+      parameters:
+      - description: The base asset contract address
+        in: path
+        name: base
+        required: true
+        type: string
+      - description: The quote asset contract address
+        in: path
+        name: quote
+        required: true
+        type: string
+      - description: The binstep value
+        in: path
+        name: binstep
+        required: true
+        type: string
+      - description: The chain name (avax, arb, bsc)
+        in: path
+        name: chain
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/types.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/types.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.ErrorResponse'
+      summary: Get v2.1 liquidity book pool pair price
+      tags:
+      - V2.1 Get Liquidity Book Pool price
+swagger: "2.0"

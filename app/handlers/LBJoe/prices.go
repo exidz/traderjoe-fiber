@@ -17,6 +17,22 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+// GetLbPoolPrice retrieves the price data for a traderjoe liquidity book pool pair on different chains.
+//
+// @Summary Get v2.1 liquidity book pool pair price
+// @Description Retrieves the price data for a v2.1 liquidity book pool pair on different chains.
+// @Tags V2.1 Get Liquidity Book Pool price
+// @Accept json
+// @Produce json
+// @Param base path string true "The base asset contract address"
+// @Param quote path string true "The quote asset contract address"
+// @Param binstep path string true "The binstep value"
+// @Param chain path string true "The chain name (avax, arb, bsc)"
+// @Success 200 {object} types.Response
+// @Failure 400 {object} types.ErrorResponse
+// @Failure 404 {object} types.ErrorResponse
+// @Failure 500 {object} types.ErrorResponse
+// @Router /{chain}/v2_1/prices/{base}/{quote}/{binstep} [get]
 func GetLbPoolPrice(c *fiber.Ctx) error {
 	baseAsset := c.AllParams()["base"]
 	quoteAsset := c.AllParams()["quote"]

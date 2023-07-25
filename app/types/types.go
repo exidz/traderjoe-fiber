@@ -76,7 +76,7 @@ type PriceResponse struct {
 type ErrorResponse struct {
 	Error   string      `json:"error"`
 	Success bool        `json:"success" default:"false"`
-	Data    interface{} `json:"data" default:"nil"`
+	Data    interface{} `json:"data"`
 }
 
 type Quote struct {

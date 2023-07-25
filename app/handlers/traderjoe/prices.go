@@ -16,6 +16,21 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+// JoePrice retrieves the price data for a traderjoe v1 pool pair on different chains.
+//
+// @Summary Get v1 pool pair price
+// @Description Retrieves the price data for a v1 pool pair on different chains.
+// @Tags V1 Get Pool price
+// @Accept json
+// @Produce json
+// @Param base path string true "The base asset contract address"
+// @Param quote path string true "The quote asset contract address"
+// @Param chain path string true "The chain name (avax, arb, bsc)"
+// @Success 200 {object} types.Response
+// @Failure 400 {object} types.ErrorResponse
+// @Failure 404 {object} types.ErrorResponse
+// @Failure 500 {object} types.ErrorResponse
+// @Router /{chain}/v1/prices/{base}/{quote} [get]
 func JoePrice(c *fiber.Ctx) error {
 
 	baseAsset := c.AllParams()["base"]
