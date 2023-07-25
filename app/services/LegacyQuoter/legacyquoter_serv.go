@@ -2,7 +2,6 @@ package legacyquoter
 
 import (
 	"errors"
-	"fmt"
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
@@ -65,7 +64,6 @@ func (q LegacyQuoter) LegacyGetQuote(tokenX common.Address, amountX *big.Int) (*
 	if err != nil {
 		return nil, errors.New("Contract error: cannot fetch legacy quote data")
 	}
-	fmt.Println(quote.VirtualAmountsWithoutSlippage)
 
 	return &quote, nil
 

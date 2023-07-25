@@ -17,6 +17,20 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+// BatchJoePrice retrieves v1 batch pool prices for multiple pairs on different chains using the JoeSwap protocol.
+//
+// @Summary Get batch pool prices
+// @Description Retrieves batch pool prices for multiple pairs on different chains using the JoeSwap protocol.
+// @Tags v1 Batch pool price
+// @Accept json
+// @Produce json
+// @Param payload body types.JoeBodyData true "Batch pool request data"
+// @Param chain path string true "The chain name (avax, arb, bsc)"
+// @Success 200 {object} types.Response
+// @Failure 400 {object} types.JoeBatchErrorResponse
+// @Failure 404 {object} types.JoeBatchErrorResponse
+// @Failure 500 {object} types.JoeBatchErrorResponse
+// @Router /{chain}/v1/batch-prices [post]
 func BatchJoePrice(c *fiber.Ctx) error {
 	payload := &types.JoeBodyData{}
 	if err := c.BodyParser(payload); err != nil {
