@@ -61,7 +61,7 @@ jobs:
       run: |
         echo "Instaling Newman"
         npm install newman -g
-        pm install -g newman-reporter-htmlextra
+        npm install -g newman-reporter-htmlextra
     - name: Run Newman
       env:
           POSTMAN_API_URL: 'https://api.getpostman.com'
