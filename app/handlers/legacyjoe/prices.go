@@ -3,6 +3,7 @@ package legacyjoe
 import (
 	"fmt"
 	"math/big"
+	"os"
 	"strconv"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -14,7 +15,6 @@ import (
 	legacyquoter "github.com/exidz/traderjoe-fiber/app/services/LegacyQuoter"
 	legacyrouter "github.com/exidz/traderjoe-fiber/app/services/LegacyRouter"
 	"github.com/exidz/traderjoe-fiber/app/types"
-	"github.com/exidz/traderjoe-fiber/config"
 	"github.com/exidz/traderjoe-fiber/utils"
 	"github.com/gofiber/fiber/v2"
 )
@@ -44,32 +44,13 @@ func GetLegacyJoePrice(c *fiber.Ctx) error {
 	var rpcUrl string
 
 	if chain == "avax" {
-		rpc, err := config.GoDotEnvVariable("AVAX_RPC")
-		if err != nil {
-			rpcUrl = constants.AVAX_RPC
-		} else {
-			rpcUrl = *rpc
-
-		}
+		rpcUrl = os.Getenv("AVAX_RPC")
 		chainId = 0
 	} else if chain == "arb" {
-		rpc, err := config.GoDotEnvVariable("ARB_RPC")
-		if err != nil {
-			rpcUrl = constants.ARB_RPC
-		} else {
-			rpcUrl = *rpc
-
-		}
-
+		rpcUrl = os.Getenv("ARB_RPC")
 		chainId = 1
 	} else if chain == "bsc" {
-		rpc, err := config.GoDotEnvVariable("BSC_RPC")
-		if err != nil {
-			rpcUrl = constants.BSC_RPC
-		} else {
-			rpcUrl = *rpc
-
-		}
+		rpcUrl = os.Getenv("BSC_RPC")
 		chainId = 2
 	} else {
 		return c.Status(fiber.StatusNotFound).JSON(types.ErrorResponse{

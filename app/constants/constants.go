@@ -53,12 +53,6 @@ const (
 	BSC_WBNB string = "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c"
 )
 
-const (
-	AVAX_RPC string = "https://1rpc.io/avax/c"
-	ARB_RPC  string = "https://1rpc.io/arb"
-	BSC_RPC  string = "https://1rpc.io/bnb"
-)
-
 type Chain int
 
 const (
