@@ -2,6 +2,7 @@ package lbjoe
 
 import (
 	"math/big"
+	"os"
 	"sync"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -12,7 +13,6 @@ import (
 	lbpair "github.com/exidz/traderjoe-fiber/app/services/LBPair"
 	lbquoter "github.com/exidz/traderjoe-fiber/app/services/LBQuoter"
 	"github.com/exidz/traderjoe-fiber/app/types"
-	"github.com/exidz/traderjoe-fiber/config"
 	"github.com/exidz/traderjoe-fiber/utils"
 	"github.com/gofiber/fiber/v2"
 )
@@ -28,7 +28,7 @@ import (
 // @Success 200 {object} types.BatchResponse
 // @Failure 400 {object} types.BatchErrorResponse
 // @Failure 404 {object} types.BatchErrorResponse
-// @Failure 500 {object} types.BatchErrorResponse
+// @Failure 500 {object} types.BatchErrorResponsefmt
 // @Router /{chain}/v2_1/batch-prices [post]
 func BatchLBPrice(c *fiber.Ctx) error {
 	payload := &types.BodyData{}
@@ -42,32 +42,13 @@ func BatchLBPrice(c *fiber.Ctx) error {
 	var rpcUrl string
 
 	if chain == "avax" {
-		rpc, err := config.GoDotEnvVariable("AVAX_RPC")
-		if err != nil {
-			rpcUrl = constants.AVAX_RPC
-		} else {
-			rpcUrl = *rpc
-
-		}
+		rpcUrl = os.Getenv("AVAX_RPC")
 		chainId = 0
 	} else if chain == "arb" {
-		rpc, err := config.GoDotEnvVariable("ARB_RPC")
-		if err != nil {
-			rpcUrl = constants.ARB_RPC
-		} else {
-			rpcUrl = *rpc
-
-		}
-
+		rpcUrl = os.Getenv("ARB_RPC")
 		chainId = 1
 	} else if chain == "bsc" {
-		rpc, err := config.GoDotEnvVariable("BSC_RPC")
-		if err != nil {
-			rpcUrl = constants.BSC_RPC
-		} else {
-			rpcUrl = *rpc
-
-		}
+		rpcUrl = os.Getenv("BSC_RPC")
 		chainId = 2
 	} else {
 		return c.Status(fiber.StatusNotFound).JSON(types.ErrorResponse{

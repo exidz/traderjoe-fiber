@@ -2,6 +2,7 @@ package traderjoe
 
 import (
 	"math/big"
+	"os"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
@@ -11,7 +12,6 @@ import (
 	joepair "github.com/exidz/traderjoe-fiber/app/services/JoePair"
 	joerouter "github.com/exidz/traderjoe-fiber/app/services/JoeRouter"
 	"github.com/exidz/traderjoe-fiber/app/types"
-	"github.com/exidz/traderjoe-fiber/config"
 	"github.com/exidz/traderjoe-fiber/utils"
 	"github.com/gofiber/fiber/v2"
 )
@@ -40,32 +40,13 @@ func JoePrice(c *fiber.Ctx) error {
 	var rpcUrl string
 
 	if chain == "avax" {
-		rpc, err := config.GoDotEnvVariable("AVAX_RPC")
-		if err != nil {
-			rpcUrl = constants.AVAX_RPC
-		} else {
-			rpcUrl = *rpc
-
-		}
+		rpcUrl = os.Getenv("AVAX_RPC")
 		chainId = 0
 	} else if chain == "arb" {
-		rpc, err := config.GoDotEnvVariable("ARB_RPC")
-		if err != nil {
-			rpcUrl = constants.ARB_RPC
-		} else {
-			rpcUrl = *rpc
-
-		}
-
+		rpcUrl = os.Getenv("ARB_RPC")
 		chainId = 1
 	} else if chain == "bsc" {
-		rpc, err := config.GoDotEnvVariable("BSC_RPC")
-		if err != nil {
-			rpcUrl = constants.BSC_RPC
-		} else {
-			rpcUrl = *rpc
-
-		}
+		rpcUrl = os.Getenv("BSC_RPC")
 		chainId = 2
 	} else {
 		return c.Status(fiber.StatusNotFound).JSON(types.ErrorResponse{

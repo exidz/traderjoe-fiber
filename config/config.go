@@ -1,8 +1,7 @@
 package config
 
 import (
-	"errors"
-	"os"
+	"log"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -10,19 +9,14 @@ import (
 )
 
 // Load env file
-func GoDotEnvVariable(key string) (*string, error) {
-	err := godotenv.Load(".env")
+// LoadAllConfigs set various configs
+func LoadAllConfigs(envFile string) {
 
+	err := godotenv.Load(envFile)
 	if err != nil {
-		return nil, errors.New("Error loading .env file")
+		log.Fatalf("can't load .env file. error: %v", err)
 	}
 
-	loaded := os.Getenv(key)
-
-	return &loaded, nil
-}
-
-func LoadAllConfig() {
 	LoadApp()
 }
 

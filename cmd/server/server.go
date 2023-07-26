@@ -32,7 +32,7 @@ func Server() {
 	routes.PricesRoutes(app)
 	routes.NotFoundRoute(app)
 
-	serverAddr := fmt.Sprintf("%s:%d", *appCfg.Host, appCfg.Port)
+	serverAddr := fmt.Sprintf("%s:%d", appCfg.Host, appCfg.Port)
 	if err := app.Listen(serverAddr); err != nil {
 		log.Fatalf("Ooops... server is not running! error: %v", err)
 	}

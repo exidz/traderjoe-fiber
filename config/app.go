@@ -1,12 +1,13 @@
 package config
 
 import (
+	"os"
 	"strconv"
 	"time"
 )
 
 type App struct {
-	Host        *string
+	Host        string
 	Port        int
 	ReadTimeout *time.Duration
 }
@@ -18,13 +19,13 @@ func AppCfg() *App {
 }
 
 func LoadApp() {
-	port, _ := GoDotEnvVariable("APP_PORT")
-	timeOut, _ := GoDotEnvVariable("APP_READ_TIMEOUT")
-	readTimeout, _ := strconv.Atoi(*timeOut)
+	port := os.Getenv("APP_PORT")
+	timeOut := os.Getenv("APP_READ_TIMEOUT")
+	readTimeout, _ := strconv.Atoi(timeOut)
 	duration := time.Duration(readTimeout) * time.Second
 
-	app.Host, _ = GoDotEnvVariable("APP_HOST")
-	app.Port, _ = strconv.Atoi(*port)
+	app.Host = os.Getenv("APP_HOST")
+	app.Port, _ = strconv.Atoi(port)
 
 	app.ReadTimeout = &duration
 
