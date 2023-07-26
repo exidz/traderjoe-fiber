@@ -48,3 +48,34 @@ jobs:
     # Run testing on the code
     - name: Run testing
       run: go test -v ./...
+
+    - name: Make Directory
+      run: mkdir -p newman-results
+    
+    - name: Install Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x'
+
+    - name: Install Newman
+      run: |
+        echo "Instaling Newman"
+        npm install newman -g
+        pm install -g newman-reporter-htmlextra
+    - name: Run Newman
+      env:
+          POSTMAN_API_URL: 'https://api.getpostman.com'
+          POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
+          POSTMAN_COLLECTION_UID: ${{ secrets.POSTMAN_COLLECTION_UID }}
+      run: |
+          newman run "${{env.POSTMAN_API_URL}}/collections/${{env.POSTMAN_COLLECTION_UID}}?apikey=${{env.POSTMAN_API_KEY}}" \
+          -r htmlextra,cli --reporter-htmlextra-export newman-results/htmlreport.html
+      # Upload test results to workspace
+    - name: Upload Results
+      uses: actions/upload-artifact@v3
+      with:
+          name: Postman_Test_Reports
+          path: newman-results
+
+
+        
