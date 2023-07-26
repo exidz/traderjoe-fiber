@@ -13,7 +13,7 @@ import (
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 func main() {
-	config.LoadApp()
+	config.LoadAllConfigs(".env")
 
 	server.Server()
 }
