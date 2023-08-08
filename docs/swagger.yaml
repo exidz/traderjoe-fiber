@@ -90,14 +90,14 @@ info:
   contact:
     email: exidz@protonmail.com
     name: API Support
-  description: 'Traderjoe pool price aggregator Rest API, developed in Golang using
-    Fiber. Support v2.1 Liquidity Book Contracts, v2 Liquidity Book Contracts, and
-    v1 Trader Joe Contracts across three major chains: Avalanche, Arbitrum, and Binance
-    Smart Chain.'
+  description: 'Traderjoe price pool feed Rest API, developed in Golang using Fiber.
+    Support v2.1 Liquidity Book Contracts, v2 Liquidity Book Contracts, and v1 Trader
+    Joe Contracts across three major chains: Avalanche, Arbitrum, and Binance Smart
+    Chain.'
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  title: TraderJoe Fiber Pool price aggregator API
+  title: TraderJoe Fiber Price pool feed API
   version: "1.0"
 paths:
   /{chain}/v1/batch-prices:
