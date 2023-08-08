@@ -25,7 +25,7 @@ func Server() {
 			return c.IP()
 		},
 		LimitReached: func(c *fiber.Ctx) error {
-			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+			return c.Status(fiber.StatusTooManyRequests).JSON(fiber.Map{
 				"error":  "Too many request",
 				"status": false,
 				"data":   nil,
