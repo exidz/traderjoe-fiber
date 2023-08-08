@@ -228,11 +228,11 @@ func GetJoeTotalLiquidity(tokenAQuote types.JoeAmountOuts, tokenBQuote types.Joe
 			tokenAwithReserve := tokenAQuote.AmountOut.Mul(reserveA)
 
 			if tokenAwithReserve.LessThan(lowLiquidityTresholdStable) {
-				if tokenBQuote.TokenId == 2 || tokenBQuote.TokenId == 1 {
+				if tokenBQuote.TokenId == 2 || tokenBQuote.TokenId == 1 || tokenBQuote.TokenId == 0 {
 					tokenBwithReserve := tokenBQuote.AmountOut.Mul(reserveB)
 
 					if tokenBwithReserve.LessThan(lowLiquidityTresholdStable) {
-						totalL := tokenAQuote.AmountOut.Add(tokenBQuote.AmountOut)
+						totalL := tokenAwithReserve.Add(tokenBwithReserve)
 
 						if totalL.LessThan(lowLiquidityTresholdStable) {
 							return errors.New("Low liquidity detected")
@@ -249,7 +249,7 @@ func GetJoeTotalLiquidity(tokenAQuote types.JoeAmountOuts, tokenBQuote types.Joe
 		} else {
 			tokenAwithReserve := tokenAQuote.AmountOut.Mul(reserveA)
 			if tokenAwithReserve.LessThan(lowLiquidityTresholdNative) {
-				if tokenBQuote.TokenId == 2 || tokenBQuote.TokenId == 1 {
+				if tokenBQuote.TokenId == 2 || tokenBQuote.TokenId == 1 || tokenBQuote.TokenId == 0 {
 					tokenBwithReserve := tokenBQuote.AmountOut.Mul(reserveB)
 					if tokenBwithReserve.LessThan(lowLiquidityTresholdStable) {
 						return errors.New("Low liquidity detected")
@@ -259,7 +259,7 @@ func GetJoeTotalLiquidity(tokenAQuote types.JoeAmountOuts, tokenBQuote types.Joe
 				} else {
 					tokenBwithReserve := tokenBQuote.AmountOut.Mul(reserveB)
 					if tokenBwithReserve.LessThan(lowLiquidityTresholdNative) {
-						totalL := tokenAQuote.AmountOut.Add(tokenBQuote.AmountOut)
+						totalL := tokenAwithReserve.Add(tokenBwithReserve)
 
 						if totalL.LessThan(lowLiquidityTresholdStable) {
 							return errors.New("Low liquidity detected")

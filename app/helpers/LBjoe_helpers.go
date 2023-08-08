@@ -100,7 +100,7 @@ func GetTotalLiquidity(tokenAQuote types.Quote, tokenBQuote types.Quote, reserve
 				if tokenBQuote.Token == 2 || tokenBQuote.Token == 1 {
 					tokenBwithReserve := tokenBQuote.AmountOut.Mul(reserveB)
 					if tokenBwithReserve.LessThan(lowLiquidityTresholdStable) {
-						totalL := tokenAQuote.AmountOut.Add(tokenBQuote.AmountOut)
+						totalL := tokenAwithReserve.Add(tokenBwithReserve)
 						if totalL.LessThan(lowLiquidityTresholdStable) {
 							return errors.New("Low liquidity detected")
 						}
@@ -126,7 +126,7 @@ func GetTotalLiquidity(tokenAQuote types.Quote, tokenBQuote types.Quote, reserve
 				} else {
 					tokenBwithReserve := tokenBQuote.AmountOut.Mul(reserveB)
 					if tokenBwithReserve.LessThan(lowLiquidityTresholdNative) {
-						totalL := tokenAQuote.AmountOut.Add(tokenBQuote.AmountOut)
+						totalL := tokenAwithReserve.Add(tokenBwithReserve)
 						if totalL.LessThan(lowLiquidityTresholdStable) {
 							return errors.New("Low liquidity detected")
 						}
