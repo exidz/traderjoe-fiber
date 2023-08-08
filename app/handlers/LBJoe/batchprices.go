@@ -28,7 +28,7 @@ import (
 // @Success 200 {object} types.BatchResponse
 // @Failure 400 {object} types.BatchErrorResponse
 // @Failure 404 {object} types.BatchErrorResponse
-// @Failure 500 {object} types.BatchErrorResponsefmt
+// @Failure 500 {object} types.BatchErrorResponse
 // @Router /{chain}/v2_1/batch-prices [post]
 func BatchLBPrice(c *fiber.Ctx) error {
 	payload := &types.BodyData{}
