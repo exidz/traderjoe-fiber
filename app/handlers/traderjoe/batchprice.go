@@ -109,7 +109,19 @@ func BatchJoePrice(c *fiber.Ctx) error {
 
 				if err != nil {
 					quoteData[i] = types.JoeBatchErrorResponse{
-						Error: dataInit.ErrorMessage,
+						Error: err.Error(),
+						Params: types.JoeBatchParams{
+							BaseAsset:  dataInit.Data.BaseAsset,
+							QuoteAsset: dataInit.Data.QuoteAsset,
+						},
+					}
+					return
+				}
+
+				notValidAddress := common.HexToAddress("0x0000000000000000000000000000000000000000")
+				if pair.String() == notValidAddress.String() {
+					quoteData[i] = types.JoeBatchErrorResponse{
+						Error: "Joe pool pair not found",
 						Params: types.JoeBatchParams{
 							BaseAsset:  dataInit.Data.BaseAsset,
 							QuoteAsset: dataInit.Data.QuoteAsset,
