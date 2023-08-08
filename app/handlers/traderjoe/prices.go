@@ -60,6 +60,7 @@ func JoePrice(c *fiber.Ctx) error {
 		})
 
 	} else if !common.IsHexAddress(quoteAsset) {
+
 		return c.Status(400).JSON(types.ErrorResponse{
 			Error: "Quote asset param is invalid, must be a contract address",
 		})
@@ -83,6 +84,12 @@ func JoePrice(c *fiber.Ctx) error {
 	}
 
 	pair, err := factory.GetJoePair(common.HexToAddress(baseAsset), common.HexToAddress(quoteAsset))
+	notValidAddress := common.HexToAddress("0x0000000000000000000000000000000000000000")
+	if pair.String() == notValidAddress.String() {
+		return c.Status(fiber.StatusBadRequest).JSON(types.ErrorResponse{
+			Error: "Joe pool pair not found",
+		})
+	}
 
 	if err != nil {
 		return c.Status(500).JSON(types.ErrorResponse{

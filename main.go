@@ -7,7 +7,7 @@ import (
 
 // @title TraderJoe Fiber Pool price aggregator API
 // @version 1.0
-// @description Traderjoe pool price aggregator Rest API, developed in Golang using Fiber. Support v2.1 Liquidity Book Contracts, v2 Liquidity Book Contracts, and v1 Trader Joe Contracts across three major chains: Avalanche, Arbitrum, and Binance Smart Chain.
+// @description Traderjoe price pool feed Rest API, developed in Golang using Fiber. Support v2.1 Liquidity Book Contracts, v2 Liquidity Book Contracts, and v1 Trader Joe Contracts across three major chains: Avalanche, Arbitrum, and Binance Smart Chain.
 // @contact.name API Support
 // @contact.email exidz@protonmail.com
 // @license.name Apache 2.0

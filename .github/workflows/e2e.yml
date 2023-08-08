@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CICD
+name: e2e
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -62,7 +62,7 @@ jobs:
         echo "Instaling Newman"
         npm install newman -g
         npm install -g newman-reporter-htmlextra
-    - name: Run Newman
+    - name: Run end to end test
       env:
           POSTMAN_API_URL: 'https://api.getpostman.com'
           POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}

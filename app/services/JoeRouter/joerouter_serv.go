@@ -118,7 +118,7 @@ func (r JoeRouter) GetQuote(tokenX common.Address, amountX *big.Int) (*Quote, er
 	var quoted Quote
 
 loop:
-	for i := 0; i < len(quote); i++ {
+	for i := 1; i < len(quote); i++ {
 		v := quote[i]
 		if r.Chain == 0 || r.Chain == 1 {
 			if v != big.NewInt(0) {

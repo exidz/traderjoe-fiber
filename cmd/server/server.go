@@ -10,6 +10,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cache"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/swagger"
@@ -18,10 +19,10 @@ import (
 func Server() {
 	appCfg := config.AppCfg()
 	fiberCfg := config.FiberConfig()
-
 	app := fiber.New(fiberCfg)
 	app.Use(cache.New())
 	app.Use(recover.New())
+	app.Use(limiter.New())
 	app.Use(cors.New())
 	app.Use(logger.New(logger.Config{
 		Format: "[${ip}]:${port} ${status} - ${method} ${path}\n",
