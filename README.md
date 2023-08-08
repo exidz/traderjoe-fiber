@@ -1,7 +1,7 @@
 
-# Traderjoe Pool price aggregator Rest API
+# Traderjoe Price pool feed Rest API
 
-Traderjoe pool price aggregator Rest API, developed in Golang using Fiber. Support v2.1 Liquidity Book Contracts, v2 Liquidity Book Contracts, and v1 Trader Joe Contracts across three major chains: Avalanche, Arbitrum, and Binance Smart Chain. 
+Traderjoe price pool feed Rest API, developed in Golang using Fiber framework. Support v2.1 Liquidity Book Contracts, v2 Liquidity Book Contracts, and v1 Trader Joe Contracts across three major chains: Avalanche, Arbitrum, and Binance Smart Chain. 
 
 
 
@@ -9,6 +9,19 @@ Traderjoe pool price aggregator Rest API, developed in Golang using Fiber. Suppo
 ## Swagger Documentation
 
 [Documentation](https://traderjoe-fiber-staging.up.railway.app/swagger/)
+
+
+## Sequence Diagram
+
+![](https://i.imgur.com/qu5SMf3.jpg)
+> Getting a v2.1 Pool Price using v2.1 LB contracts
+
+![](https://i.imgur.com/YBKtSZw.jpg)
+> Getting a v2 Pool Price using v2 LB contracts
+
+![](https://i.imgur.com/l96KdZf.jpeg)
+> Getting a v1 Pool Price using v1 Joe contracts
+
 
 
 ## Benchmark
@@ -52,21 +65,23 @@ Run the project using Docker
   cd traderjoe-fiber
   docker-compose up --build
 ```
-Alternatively, you can run using standard method
+Alternatively, you can run locally
 
 ```bash
   git clone https://github.com/exidz/traderjoe-fiber.git
   cd traderjoe-fiber
+  go mod download
   go build -o traderjoe main.go
   ./traderjoe
 ```
-## Running Tests
+## Running test
 
 To run tests, run the following command
 
 ```bash
   go test -v ./...
 ```
+
 
 
 ## API Reference
@@ -107,7 +122,7 @@ Support 20 batch pool price per request
 
 Sample curl request
 
-```http
+```bash
 curl --location --request POST 'https://traderjoe-fiber-staging.up.railway.app/avax/v2_1/batch-prices' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -140,13 +155,13 @@ curl --location --request POST 'https://traderjoe-fiber-staging.up.railway.app/a
 | `quoteAsset` | `string` | **Required**.  ERC20 token contract address|
 
 Sample curl request
-```http
+```bash
 curl --location --request GET 'https://traderjoe-fiber-staging.up.railway.app/avax/v1/prices/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/0xce1bffbd5374dac86a2893119683f4911a2f7814'
 ```
 
 #### Get v1 batch pool price (1:1)
 
-```http
+```bash
   POST /${chain}/v1/batch-prices
 ```
 Support 20 batch pool price per request
@@ -160,7 +175,7 @@ Support 20 batch pool price per request
 
 Sample curl request
 
-```http
+```bash
 curl --location --request POST 'https://traderjoe-fiber-staging.up.railway.app/avax/v1/batch-prices' \
 --header 'Content-Type: application/json' \
 --data-raw '{
